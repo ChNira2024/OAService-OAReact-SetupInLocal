@@ -1,0 +1,41 @@
+http://localhost:1111/attachment/getMatrixNo/{pymtReqId}
+==========================================================
+Here i am getting "AttachmentData" BO by passing some fields..
+
+Query::-
+
+String query = "SELECT pmt.PYMT_REQ_ID, pmt.MATRIX_FILE_REF_NO, pmt.MATRIX_REF_NO as matrixRefNo, "
+        + "pmt.MATRIX_REF_NO as strMatrixRefNo, pmt.INVOICE_AMOUNT, pmt.SUPPLIER_ID, pmt.BUDGET_YEAR, "
+        + "pmt.SERVICE_CODE, pmt.MGMT_COMP_ID, pmt.BUILDING_ID, pmt.PAYMENT_TYPE, pmt.BIFURCATION, "
+        + "sp.TRADE_LICENSE_EXP_DATE, sp.AUTO_RENEWAL, sp.IS_GOVERNMENT_ENTITY, sp.IS_INSURANCE_COMPANY, "
+        + "agr.AGREEMENT_EXP_DATE "
+        + "FROM " + DBAPPEND + "oa_payment_requests pmt, " + DBAPPEND + "oa_suppliers sp, "
+        + "" + DBAPPEND + "oa_agreement_details agr "
+        + "WHERE pmt.SUPPLIER_ID = sp.SUPPLIER_ID "
+        + "AND pmt.MGMT_COMP_ID = agr.MGMT_COMP_ID "
+        + "AND pmt.SUPPLIER_ID = agr.SUPPLIER_ID "
+        + "AND PMT.BUILDING_ID = agr.BUILDING_ID "
+        + "AND pmt.PYMT_REQ_ID = " + pymtReqId;
+Explanation:
+
+Tables Involved:
+
+oa_payment_requests: Alias pmt is used for this table.
+oa_suppliers: Alias sp is used for this table.
+oa_agreement_details: Alias agr is used for this table.
+Selected Columns:
+
+The query selects various columns from the tables, including PYMT_REQ_ID, MATRIX_FILE_REF_NO, MATRIX_REF_NO, INVOICE_AMOUNT, SUPPLIER_ID, BUDGET_YEAR, SERVICE_CODE, MGMT_COMP_ID, BUILDING_ID, PAYMENT_TYPE, BIFURCATION, TRADE_LICENSE_EXP_DATE, AUTO_RENEWAL, IS_GOVERNMENT_ENTITY, IS_INSURANCE_COMPANY, AGREEMENT_EXP_DATE.
+Joins:
+
+The query uses multiple joins to connect the tables based on specific conditions:
+pmt.SUPPLIER_ID = sp.SUPPLIER_ID: Joining oa_payment_requests with oa_suppliers.
+pmt.MGMT_COMP_ID = agr.MGMT_COMP_ID: Joining oa_payment_requests with oa_agreement_details based on management company ID.
+pmt.SUPPLIER_ID = agr.SUPPLIER_ID: Further joining based on supplier ID.
+PMT.BUILDING_ID = agr.BUILDING_ID: Additional condition based on building ID.
+WHERE Clause:
+
+The WHERE clause filters the result set based on the value of PYMT_REQ_ID.
+Aliases:
+
+Aliases (pmt, sp, agr) are used to simplify the SQL query by providing shorthand names for the table names.
